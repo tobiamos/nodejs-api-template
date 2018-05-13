@@ -22,7 +22,7 @@ userSchema.methods.verifyPassword = function verify(password) {
 };
 
 
-userSchema.generateJWT = function generate() {
+userSchema.methods.generateJWT = function generate() {
   return sign(
     {
       _id: this._id,

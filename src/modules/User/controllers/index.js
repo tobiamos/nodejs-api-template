@@ -10,6 +10,7 @@ module.exports.register = async (req, res) => {
   user.email = email;
   user.setPassword(password);
   await user.save();
-  sendJSONResponse(res, 200, user, req.method, 'Created New User!');
+  const token = user.generateJWT();
+  sendJSONResponse(res, 200, { token, user }, req.method, 'Created New User!');
 };
 
