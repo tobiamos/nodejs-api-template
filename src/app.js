@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '52428800' }));
 const apiRoutes = require('./router');
 
-app.use('/api/v2', apiRoutes);
+app.use('/api/v1', apiRoutes);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
