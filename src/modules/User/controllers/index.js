@@ -3,7 +3,7 @@ const { sendJSONResponse } = require('../../../helpers');
 
 const User = mongoose.model('User');
 
-module.exports.createUser = async (req, res) => {
+module.exports.register = async (req, res) => {
   const { name, email, password } = req.body;
   const user = new User();
   user.name = name;
