@@ -28,10 +28,10 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   if (config.env !== 'test') {
-    console.error('THIS IS ERR', err);
+    logger.error('THIS IS ERR', err);
   }
   if (err.isBoom) {
-    const  { message } = err.data[0].message;
+    const { message } = err.data[0].message;
     sendJSONResponse(res, err.output.statusCode, null, req.method, message);
   } else if (err.status === 404) {
     sendJSONResponse(res, err.status, null, req.method, 'Not Found');
@@ -40,6 +40,6 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(config.port, () => console.log(chalk.blue('APP RUNNING ON '), config.port));
+app.listen(config.port, () => logger.info(chalk.blue('APP RUNNING ON '), config.port));
 
 module.exports = { app };
