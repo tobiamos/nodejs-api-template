@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const { radomBytes, pbkdf2sync } = require('crypto');
+const { randomBytes, pbkdf2Sync } = require('crypto');
 const { sign } = require('jsonwebtoken');
-const { secret } = require('../../config');
+const { jwtsecret } = require('../../config');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -11,13 +11,13 @@ const userSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-userSchema.methods.setPassword = function password(password) {
-  this.salt = radomBytes(16).toString('hex');
-  this.hash = pbkdf2sync(password, this.salt, 100, 64, 'sha512').toString('hex');
+userSchema.methods.setPassword = function userPassword(password) {
+  this.salt = randomBytes(16).toString('hex');
+  this.hash = pbkdf2Sync(password, this.salt, 100, 64, 'sha512').toString('hex');
 };
 
 userSchema.methods.verifyPassword = function verify(password) {
-  const hash = pbkdf2sync(password, this.saly, 100, 64, 'sha512').toString('hex');
+  const hash = pbkdf2Sync(password, this.saly, 100, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
@@ -29,7 +29,7 @@ userSchema.methods.generateJWT = function generate() {
       name: this.name,
       email: this.email,
     },
-    secret,
+    jwtsecret,
     {
       expiresIn: '24h',
     },

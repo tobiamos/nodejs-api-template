@@ -13,7 +13,7 @@ const logger = require('./config/logger');
 require('./models');
 
 if (config.env !== 'test') {
-  app.use(morgan('dev', { stream: logger.stream }));
+  app.use(morgan('dev'));
 }
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '52428800' }));
@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
     logger.error('THIS IS ERR', err);
   }
   if (err.isBoom) {
-    const { message } = err.data[0].message;
+    const { message } = err.data[0];
     sendJSONResponse(res, err.output.statusCode, null, req.method, message);
   } else if (err.status === 404) {
     sendJSONResponse(res, err.status, null, req.method, 'Not Found');
