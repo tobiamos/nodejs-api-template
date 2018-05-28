@@ -1,5 +1,5 @@
 module.exports = {
-  env: 'production',
+  env: 'test',
   db: process.env.DBURI,
   port: process.env.PORT,
   loglevel: process.env.LOGLEVEL,
@@ -10,5 +10,4 @@ module.exports = {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-
 };
